@@ -1,12 +1,12 @@
 <div [formGroup]="form">
   <label>Nome:</label><br>
-  <input formControlName="name" /><br><br>
+  <input formControlName="name" class="form-control"/><br><br>
 
   <label>Quantidade:</label><br>
-  <input formControlName="quantity" type="number" /><br><br>
+  <input formControlName="quantity" type="number" class="form-control"/><br><br>
 
   <label>Categoria:</label><br>
-  <select formControlName="category">
+  <select formControlName="category" class="form-control">
     <option value="">Selecione uma categoria</option>
     <option *ngFor="let cat of categories" [value]="cat.id">
       {{ cat.name }}

@@ -20,6 +20,7 @@ export class ProductFormComponent implements OnInit {
   isEdit = false;
   id?: number;
   categories: any[] = [];
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -44,8 +45,17 @@ export class ProductFormComponent implements OnInit {
 
     if (this.id) {
       this.isEdit = true;
-      this.productService.getById(this.id).subscribe((product) => {
-        this.form.patchValue(product);
+      this.isLoading = true;
+
+      this.productService.getById(this.id).subscribe({
+        next: (product) => {
+          this.form.patchValue({ ...product, category: product.category });
+          this.isLoading = false; // Set loading to false when data is received
+        },
+        error: (error) => {
+          console.error('Error fetching product:', error);
+          this.isLoading = false;
+        }
       });
     }
   }
@@ -55,11 +65,22 @@ export class ProductFormComponent implements OnInit {
 
     const product: Product = { id: this.id!, ...this.form.value };
 
-    if (this.isEdit) {
-      this.productService.update(product).subscribe(() => this.back());
-    } else {
-      this.productService.create(product).subscribe(() => this.back());
-    }
+    this.isLoading = true;
+
+    const operation$ = this.isEdit
+      ? this.productService.update(product)
+      : this.productService.create(product);
+
+    operation$.subscribe({
+      next: () => {
+        this.isLoading = false;
+        this.back();
+      },
+      error: (error) => {
+        console.error('Error saving product:', error);
+        this.isLoading = false;
+      }
+    });
   }
 
   back() {

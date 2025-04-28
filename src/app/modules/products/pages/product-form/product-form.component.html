@@ -1,11 +1,23 @@
-<h2>{{ isEdit ? 'Editar Produto' : 'Novo Produto' }}</h2>
+<h2 class="p-4">{{ isEdit ? 'Editar Produto' : 'Novo Produto' }}</h2>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <app-product-form-fields [form]="form"></app-product-form-fields>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-4">
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Carregando...</span>
+    </div>
+  </div>
 
-  <button type="submit" [disabled]="form.invalid">
-    {{ isEdit ? 'Atualizar' : 'Salvar' }}
-  </button>
+  <div *ngIf="!isLoading" class="h-100 w-100">
+    <app-product-form-fields [form]="form" [categories]="categories"></app-product-form-fields>
+
+      <div class="mt-4 d-flex gap-2">
+        <button type="submit" class="btn btn-primary" [disabled]="form.invalid">
+          {{ isEdit ? 'Atualizar' : 'Salvar' }}
+        </button>
+
+        <button type="button" class="btn btn-secondary" (click)="back()">
+          Cancelar
+        </button>
+      </div>
+    </div>
 </form>
-
-<button (click)="back()">Cancelar</button>

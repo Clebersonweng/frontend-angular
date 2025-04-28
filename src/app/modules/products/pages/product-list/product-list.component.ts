@@ -4,18 +4,19 @@ import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { ProductTableComponent } from '../../components/product-table/product-table.component';
 import { Product } from '../../models/product.model';
-import { HttpClientModule } from '@angular/common/http';
 
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule,HttpClientModule, RouterModule, ProductTableComponent],
+  imports: [CommonModule, RouterModule, ProductTableComponent],
   templateUrl: './product-list.component.html'
 })
 
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
+  selectedProductId?: number;
 
   constructor(private productService: ProductService, private router: Router) {}
 
@@ -35,9 +36,20 @@ export class ProductListComponent implements OnInit {
     this.router.navigate(['/products/edit', id]);
   }
 
-  deleteProduct(id: number) {
-    if (confirm('Deseja excluir este produto?')) {
-      this.productService.delete(id).subscribe(() => this.loadProducts());
+  openDeleteModal(productId: number) {
+    this.selectedProductId = productId;
+    const modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+    modal.show();
+  }
+
+  confirmDelete() {
+    if (this.selectedProductId) {
+      this.productService.delete(this.selectedProductId).subscribe(() => {
+        this.loadProducts();
+        const modalElement = document.getElementById('deleteModal');
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        modal.hide();
+      });
     }
   }
 }
