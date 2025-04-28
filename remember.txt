@@ -1,0 +1,45 @@
+#### INSTALLING THE ANGULAR  CLI  #######
+
+Verify node is installed:
+
+$ node -v
+v11.2.0
+Verify npm is installed:
+
+$ npm -v
+6.4.1
+Verify your npm global install file path is configured (known as prefix). Mine is under ~/.npm-packages:
+
+$ npm config ls -l | grep prefix
+prefix = "/Users/christiangroleau/.npm-packages"
+If not, you can place it into your ~/.npmrc file:
+
+echo prefix=~/.npm-packages >> ~/.npmrc
+Verify that your prefix path is listed in your system PATH:
+
+$ echo $PATH
+/Users/christiangroleau/.npm-packages/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+If not, invoke the following:
+
+export PATH="$HOME/.npm-packages/bin:$PATH"
+Finally, you can reinstall angular-cli (in my case I needed to install it globally):
+
+$ npm install -g @angular/cli
+Verify installation:
+
+$ ng -v
+
+############### END THE INSTALLATION   ####
+
+ng g module modules/products
+
+# create the folders pages
+mkdir -p src/app/modules/products/{pages,models,services}
+#create product form
+ng g component modules/products/pages/product-form --standalone --flat
+
+# create the model
+touch src/app/modules/products/models/product.model.ts
+
+#create the service product
+ng g service modules/products/services/product

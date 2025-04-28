@@ -1,0 +1,11 @@
+<h2>{{ isEdit ? 'Editar Produto' : 'Novo Produto' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <app-product-form-fields [form]="form"></app-product-form-fields>
+
+  <button type="submit" [disabled]="form.invalid">
+    {{ isEdit ? 'Atualizar' : 'Salvar' }}
+  </button>
+</form>
+
+<button (click)="back()">Cancelar</button>

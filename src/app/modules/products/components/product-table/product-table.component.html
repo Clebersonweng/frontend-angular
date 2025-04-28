@@ -1,0 +1,23 @@
+<table border="1" width="100%" style="margin-top: 10px;">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Quantidade</th>
+      <th>Categoria</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of products">
+      <td>{{product.id}}</td>
+      <td>{{product.name}}</td>
+      <td>{{product.quantity}}</td>
+      <td>{{product.category}}</td>
+      <td>
+        <button (click)="edit.emit(product.id)">Editar</button>
+        <button (click)="delete.emit(product.id)">Excluir</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,5 @@
+<h2>Produtos</h2>
+<button (click)="navigateToNew()">Novo Produto</button>
+
+<app-product-table [products]="products" (edit)="editProduct($event)" (delete)="deleteProduct($event)">
+</app-product-table>
