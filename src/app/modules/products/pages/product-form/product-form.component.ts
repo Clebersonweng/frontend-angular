@@ -6,12 +6,11 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { ProductFormFieldsComponent } from '../../components/product-form-fields/product-form-fields.component';
 import { Product } from '../../models/product.model';
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-form',
   standalone: true,
-  imports: [CommonModule,HttpClientModule, ReactiveFormsModule, ProductFormFieldsComponent],
+  imports: [CommonModule, ReactiveFormsModule, ProductFormFieldsComponent],
   templateUrl: './product-form.component.html'
 })
 
