@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product.service';
+import { CategoryService } from '../../services/category.service';
 import { ProductFormFieldsComponent } from '../../components/product-form-fields/product-form-fields.component';
 import { Product } from '../../models/product.model';
 
@@ -18,10 +19,12 @@ export class ProductFormComponent implements OnInit {
   form: FormGroup;
   isEdit = false;
   id?: number;
+  categories: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
+    private categoryService: CategoryService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -34,6 +37,11 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
+
+    this.categoryService.getAll().subscribe(categories => {
+      this.categories = categories;
+    });
+
     if (this.id) {
       this.isEdit = true;
       this.productService.getById(this.id).subscribe((product) => {

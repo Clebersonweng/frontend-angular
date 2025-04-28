@@ -11,4 +11,5 @@ import { ReactiveFormsModule, FormGroup } from '@angular/forms';
 
 export class ProductFormFieldsComponent {
   @Input() form!: FormGroup;
+  @Input() categories: any[] = [];
 }

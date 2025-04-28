@@ -6,5 +6,10 @@
   <input formControlName="quantity" type="number" /><br><br>
 
   <label>Categoria:</label><br>
-  <input formControlName="category" /><br><br>
+  <select formControlName="category">
+    <option value="">Selecione uma categoria</option>
+    <option *ngFor="let cat of categories" [value]="cat.id">
+      {{ cat.name }}
+    </option>
+  </select><br><br>
 </div>
